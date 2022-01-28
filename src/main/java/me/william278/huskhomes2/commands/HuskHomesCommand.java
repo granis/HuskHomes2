@@ -4,6 +4,7 @@ import de.themoep.minedown.MineDown;
 import me.william278.huskhomes2.HuskHomes;
 import me.william278.huskhomes2.util.MessageManager;
 import me.william278.huskhomes2.migrators.EssentialsMigrator;
+import me.william278.huskhomes2.migrators.MultiHomeMigrator;
 import me.william278.huskhomes2.util.ChatList;
 import me.william278.huskhomes2.util.UpdateChecker;
 import net.md_5.bungee.api.ChatColor;
@@ -134,7 +135,16 @@ public class HuskHomesCommand extends CommandBase implements TabCompleter {
                         } else if (args.length == 2) {
                             EssentialsMigrator.migrate();
                         } else {
-                            sender.sendMessage(ChatColor.RED + "Invalid syntax! Usage: /huskhomes migrate essentialsX [world filter] [target server]");
+                            sender.sendMessage(ChatColor.RED + "Invalid syntax! Usage: /huskhomes migrate essentialsX|MultiHome [world filter] [target server]");
+                        }
+                    } else if (args[1].equalsIgnoreCase("multihome")) {
+                        sender.spigot().sendMessage(new MineDown("[HuskHomes](#00fb9a bold) &#00fb9a&| Starting data migration from MultiHome...").toComponent());
+                        if (args.length == 4) {
+                            MultiHomeMigrator.migrate(args[2].toLowerCase(), args[3].toLowerCase());
+                        } else if (args.length == 2) {
+                            MultiHomeMigrator.migrate();
+                        } else {
+                            sender.sendMessage(ChatColor.RED + "Invalid syntax! Usage: /huskhomes migrate MultiHome [world filter] [target server]");
                         }
                     } else {
                         sender.sendMessage(ChatColor.RED + "Invalid argument! Usage: /huskhomes migrate essentialsX");
